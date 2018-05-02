@@ -668,7 +668,8 @@ namespace Senparc.Weixin.MP.AdvancedAPIs
                 {
                     media_id = mediaId
                 };
-                return await Senparc.Weixin.CommonAPIs.CommonJsonSend.SendAsync<GetForeverMediaVideoResultJson>(accessToken, url, data, CommonJsonSendType.POST, timeOut: timeOut);
+                var result = await Senparc.Weixin.CommonAPIs.CommonJsonSend.SendAsync<GetForeverMediaVideoResultJson>(accessToken, url, data, CommonJsonSendType.POST, timeOut: timeOut);
+                return result;
             }, accessTokenOrAppId);
         }
 
