@@ -12,6 +12,7 @@ using Senparc.Weixin.Work.Entities;
 using Senparc.Weixin.MP.Sample.CommonService.Utilities;
 using Senparc.Weixin.MP.Sample.CommonService.WorkMessageHandlers;
 using Senparc.Weixin.HttpUtility;
+using Senparc.CO2NET.HttpUtility;
 
 namespace Senparc.Weixin.MP.CoreSample.Controllers
 {
@@ -20,8 +21,8 @@ namespace Senparc.Weixin.MP.CoreSample.Controllers
     /// </summary>
     public class ThirdPartyAuthController : Controller
     {
-        public static readonly string Token = Config.DefaultSenparcWeixinSetting.Token;//与微信公众账号后台的Token设置保持一致，区分大小写。
-        public static readonly string EncodingAESKey = Config.DefaultSenparcWeixinSetting.EncodingAESKey;//与微信公众账号后台的EncodingAESKey设置保持一致，区分大小写。
+        public static readonly string Token = Config.SenparcWeixinSetting.Token;//与微信公众账号后台的Token设置保持一致，区分大小写。
+        public static readonly string EncodingAESKey = Config.SenparcWeixinSetting.EncodingAESKey;//与微信公众账号后台的EncodingAESKey设置保持一致，区分大小写。
         public static readonly string SuiteId = "tj8946e399c3b2936f";//与微信企业账号后台的EncodingAESKey设置保持一致，区分大小写。
 
 

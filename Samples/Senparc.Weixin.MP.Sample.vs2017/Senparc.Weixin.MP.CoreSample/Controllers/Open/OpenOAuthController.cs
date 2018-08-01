@@ -6,7 +6,7 @@ using System.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Senparc.Weixin.Exceptions;
-using Senparc.Weixin.Helpers.Extensions;
+using Senparc.CO2NET.Extensions;
 using Senparc.Weixin.MP.Sample.CommonService.OpenTicket;
 using Senparc.Weixin.Open.CommonAPIs;
 using Senparc.Weixin.Open.ComponentAPIs;
@@ -17,8 +17,8 @@ namespace Senparc.Weixin.MP.CoreSample.Controllers
 
     public class OpenOAuthController : BaseController
     {
-        private string component_AppId = Config.DefaultSenparcWeixinSetting.Component_Appid;
-        private string component_Secret = Config.DefaultSenparcWeixinSetting.Component_Secret;
+        private string component_AppId = Config.SenparcWeixinSetting.Component_Appid;
+        private string component_Secret = Config.SenparcWeixinSetting.Component_Secret;
         //private static string ComponentAccessToken = null;//需要授权获取，腾讯服务器会主动推送
 
         #region 开放平台入口及回调

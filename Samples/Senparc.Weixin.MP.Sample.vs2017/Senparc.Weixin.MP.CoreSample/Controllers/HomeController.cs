@@ -53,6 +53,7 @@ namespace Senparc.Weixin.MP.CoreSample.Controllers
             Func<FileVersionInfo, string> getDisplayVersion = fileVersionInfo =>
                  Regex.Match(fileVersionInfo.FileVersion, @"\d+\.\d+\.\d+").Value;
 
+            TempData["CO2NET"] = getDisplayVersion(getFileVersionInfo("Senparc.CO2NET.dll"));
             TempData["WeixinVersion"] = getDisplayVersion(getFileVersionInfo("Senparc.Weixin.dll"));
             TempData["MpVersion"] = getDisplayVersion(getFileVersionInfo("Senparc.Weixin.MP.dll"));
             TempData["ExtensionVersion"] = getDisplayVersion(getFileVersionInfo("Senparc.Weixin.MP.MvcExtension.dll"));
@@ -66,7 +67,7 @@ namespace Senparc.Weixin.MP.CoreSample.Controllers
 
             //缓存
             //var containerCacheStrategy  = CacheStrategyFactory.GetContainerCacheStrategyInstance();
-            var containerCacheStrategy = CacheStrategyFactory.GetObjectCacheStrategyInstance().ContainerCacheStrategy;
+            var containerCacheStrategy = ContainerCacheStrategyFactory.GetContainerCacheStrategyInstance()/*.ContainerCacheStrategy*/;
             TempData["CacheStrategy"] = containerCacheStrategy.GetType().Name.Replace("ContainerCacheStrategy", "");
 
             //文档下载版本
