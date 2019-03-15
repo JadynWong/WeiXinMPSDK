@@ -1,5 +1,5 @@
 ﻿/*----------------------------------------------------------------
-    Copyright (C) 2018 Senparc
+    Copyright (C) 2019 Senparc
     
     文件名：RequestMessageEvent_Change_Contact.cs
     文件功能描述：事件之上报通讯录变更事件
@@ -9,10 +9,18 @@
     
     修改标识：pekrr1e - 20180503
     修改描述：整理接口 v1.4.1 增加“接收通讯录变更事件”
-    
+
+    修改标识：Senparc - 20181030
+    修改描述：v3.1.16 fix bug：RequestMessageEvent_Change_Contact_User_Create.Department 属性类型错误，添加 DepartmentList 自动转成 long[]
+
+    修改标识：Senparc - 20190214
+    修改描述：v3.3.7 修复 IsLeader 参数大小写问题
+
 ----------------------------------------------------------------*/
 
+using Senparc.CO2NET.Extensions;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Senparc.Weixin.Work.Entities
 {
@@ -37,7 +45,7 @@ namespace Senparc.Weixin.Work.Entities
             get { return ContactChangeType.create_party; }
         }
     }
-    public class RequestMessageEvent_Change_Contact_User_Base: RequestMessageEvent_Change_Contact_Base
+    public class RequestMessageEvent_Change_Contact_User_Base : RequestMessageEvent_Change_Contact_Base
     {
         public override ContactChangeType ChangeType
         {
@@ -70,9 +78,25 @@ namespace Senparc.Weixin.Work.Entities
         /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// 成员所属部门id列表
+        /// 成员所属部门id列表（格式：[1,2,3]）
         /// </summary>
-        public long[] Department { get; set; }
+        public string Department { get; set; }
+        /// <summary>
+        /// 从 Department 属性自动转成的数组
+        /// </summary>
+        public long[] DepartmentIdList
+        {
+            get
+            {
+                if (Department.IsNullOrEmpty())
+                {
+                    return new long[0];
+                }
+                return Department.Split(',').Select(z => long.Parse(z)).ToArray();
+            }
+        }
+
+
         /// <summary>
         /// 职位信息
         /// </summary>
@@ -92,7 +116,7 @@ namespace Senparc.Weixin.Work.Entities
         /// <summary>
         /// 上级字段，标识是否为上级。第三方暂不支持
         /// </summary>
-        public int Isleader { get; set; }
+        public int IsLeader { get; set; }
         /// <summary>
         /// 头像url。注：如果要获取小图将url最后的”/0”改成”/100”即可。
         /// </summary>

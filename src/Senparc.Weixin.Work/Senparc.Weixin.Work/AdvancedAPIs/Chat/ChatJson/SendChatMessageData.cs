@@ -1,5 +1,5 @@
 ﻿/*----------------------------------------------------------------
-    Copyright (C) 2018 Senparc
+    Copyright (C) 2019 Senparc
     
     文件名：SendChatMessageData.cs
     文件功能描述：会话接口返回结果
@@ -12,7 +12,7 @@
 
 ----------------------------------------------------------------*/
 
-using Senparc.Weixin.Work.Entities;
+using Senparc.NeuChar.Entities;
 using System.Collections.Generic;
 
 namespace Senparc.Weixin.Work.AdvancedAPIs.Chat

@@ -1,5 +1,5 @@
 ﻿/*----------------------------------------------------------------
-    Copyright (C) 2018 Senparc
+    Copyright (C) 2019 Senparc
     
     文件名：SenparcWeixinSetting.cs
     文件功能描述：Senparc.Weixin JSON 配置
@@ -15,6 +15,9 @@
 
     修改标识：Senparc - 20180622
     修改描述：v5.0.8 SenparcWeixinSetting 构造函数提供 isDebug 参数
+
+    修改标识：Senparc - 20180802
+    修改描述：v15.2.0 SenparcWeixinSetting 添加 TenPayV3_WxOpenTenpayNotify 属性，用于设置小程序支付回调地址
 
 ----------------------------------------------------------------*/
 
@@ -61,7 +64,7 @@ namespace Senparc.Weixin.Entities
             Items["Default"] = this;//储存第一个默认参数
         }
 
-#if !NETCOREAPP2_0 && !NETCOREAPP2_1 && !NETSTANDARD2_0
+#if !NETSTANDARD2_0 && !NETCOREAPP2_0 && !NETCOREAPP2_1 || NETCOREAPP2_2 && !NETSTANDARD2_0
         /// <summary>
         /// 从 Web.Config 文件自动生成 SenparcWeixinSetting
         /// </summary>
@@ -91,10 +94,17 @@ namespace Senparc.Weixin.Entities
             senparcWeixinSetting.WeixinPay_TenpayNotify = System.Configuration.ConfigurationManager.AppSettings["WeixinPay_TenpayNotify"];
             //微信支付V3
             senparcWeixinSetting.TenPayV3_MchId = System.Configuration.ConfigurationManager.AppSettings["TenPayV3_MchId"];
+            senparcWeixinSetting.TenPayV3_SubMchId = System.Configuration.ConfigurationManager.AppSettings["TenPayV3_SubMchId"];
             senparcWeixinSetting.TenPayV3_Key = System.Configuration.ConfigurationManager.AppSettings["TenPayV3_Key"];
             senparcWeixinSetting.TenPayV3_AppId = System.Configuration.ConfigurationManager.AppSettings["TenPayV3_AppId"];
             senparcWeixinSetting.TenPayV3_AppSecret = System.Configuration.ConfigurationManager.AppSettings["TenPayV3_AppSecret"];
             senparcWeixinSetting.TenPayV3_TenpayNotify = System.Configuration.ConfigurationManager.AppSettings["TenPayV3_TenpayNotify"];
+            senparcWeixinSetting.TenPayV3_WxOpenTenpayNotify = System.Configuration.ConfigurationManager.AppSettings["TenPayV3_WxOpenTenpayNotify"];
+            if (string.IsNullOrEmpty(senparcWeixinSetting.TenPayV3_WxOpenTenpayNotify))
+            {
+                senparcWeixinSetting.TenPayV3_WxOpenTenpayNotify = senparcWeixinSetting.TenPayV3_TenpayNotify + "WxOpen";//设置默认值
+            }
+
             //开放平台
             senparcWeixinSetting.Component_Appid = System.Configuration.ConfigurationManager.AppSettings["Component_Appid"];
             senparcWeixinSetting.Component_Secret = System.Configuration.ConfigurationManager.AppSettings["Component_Secret"];

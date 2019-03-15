@@ -1,7 +1,7 @@
 ﻿#region Apache License Version 2.0
 /*----------------------------------------------------------------
 
-Copyright 2018 Jeffrey Su & Suzhou Senparc Network Technology Co.,Ltd.
+Copyright 2019 Jeffrey Su & Suzhou Senparc Network Technology Co.,Ltd.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
 except in compliance with the License. You may obtain a copy of the License at
@@ -19,7 +19,7 @@ Detail: https://github.com/JeffreySu/WeiXinMPSDK/blob/master/license.md
 #endregion Apache License Version 2.0
 
 /*----------------------------------------------------------------
-    Copyright (C) 2018 Senparc
+    Copyright (C) 2019 Senparc
 
     文件名：ProviderTokenContainer.cs
     文件功能描述：通用接口ProviderToken容器，用于自动管理ProviderToken，如果过期会重新获取
@@ -62,6 +62,9 @@ Detail: https://github.com/JeffreySu/WeiXinMPSDK/blob/master/license.md
 
     修改标识：Senparc - 20180707
     修改描述：v2.0.9 Container 的 Register() 的微信参数自动添加到 Config.SenparcWeixinSetting.Items 下
+
+    修改标识：Senparc - 20181226
+    修改描述：v3.3.2 修改 DateTime 为 DateTimeOffset
 
 ----------------------------------------------------------------*/
 
@@ -111,7 +114,7 @@ namespace Senparc.Weixin.Work.Containers
         /// <summary>
         /// 过期时间
         /// </summary>
-        public DateTime ExpireTime { get; set; }
+        public DateTimeOffset ExpireTime { get; set; }
         //        {
         //            get { return _expireTime; }
         //#if NET35 || NET40
@@ -139,10 +142,10 @@ namespace Senparc.Weixin.Work.Containers
         /// </summary>
         internal object Lock = new object();
 
-        private string _corpId;
-        private string _corpSecret;
-        private DateTime _expireTime;
-        private ProviderTokenResult _providerTokenResult;
+        //private string _corpId;
+        //private string _corpSecret;
+        //private DateTime _expireTime;
+        //private ProviderTokenResult _providerTokenResult;
     }
 
     /// <summary>
@@ -180,7 +183,7 @@ namespace Senparc.Weixin.Work.Containers
                     Name = name,
                     CorpId = corpId,
                     CorpSecret = corpSecret,
-                    ExpireTime = DateTime.MinValue,
+                    ExpireTime = DateTimeOffset.MinValue,
                     ProviderTokenResult = new ProviderTokenResult()
                 };
                 Update(BuildingKey(corpId, corpSecret), bag, null);
@@ -244,7 +247,7 @@ namespace Senparc.Weixin.Work.Containers
             var providerTokenBag = TryGetItem(BuildingKey(corpId, corpSecret));
             lock (providerTokenBag.Lock)
             {
-                if (getNewToken || providerTokenBag.ExpireTime <= DateTime.Now)
+                if (getNewToken || providerTokenBag.ExpireTime <= SystemTime.Now)
                 {
                     //已过期，重新获取
                     providerTokenBag.ProviderTokenResult = SsoApi.GetProviderToken(providerTokenBag.CorpId,
@@ -316,7 +319,7 @@ namespace Senparc.Weixin.Work.Containers
             var providerTokenBag = TryGetItem(BuildingKey(corpId, corpSecret));
             //lock (providerTokenBag.Lock)
             {
-                if (getNewToken || providerTokenBag.ExpireTime <= DateTime.Now)
+                if (getNewToken || providerTokenBag.ExpireTime <= DateTimeOffset.Now)
                 {
                     //已过期，重新获取
                     var providerTokenResult = await SsoApi.GetProviderTokenAsync(providerTokenBag.CorpId,

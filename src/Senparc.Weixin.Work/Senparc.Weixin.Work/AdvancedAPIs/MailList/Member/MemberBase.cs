@@ -1,5 +1,5 @@
 ﻿/*----------------------------------------------------------------
-    Copyright (C) 2018 Senparc
+    Copyright (C) 2019 Senparc
     
     文件名：MemberBase.cs
     文件功能描述：成员信息基础类
@@ -8,6 +8,8 @@
     创建标识：Senparc - 20180728
 
 ----------------------------------------------------------------*/
+
+using System.Collections.Generic;
 
 namespace Senparc.Weixin.Work.AdvancedAPIs.MailList.Member
 {
@@ -93,7 +95,7 @@ namespace Senparc.Weixin.Work.AdvancedAPIs.MailList.Member
 
     public class Extattr
     {
-        public Attr[] attrs { get; set; }
+        public List<Attr> attrs { get; set; }
     }
 
     public class Attr

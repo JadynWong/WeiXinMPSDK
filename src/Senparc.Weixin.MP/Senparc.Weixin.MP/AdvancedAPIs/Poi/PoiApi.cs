@@ -1,7 +1,7 @@
 ﻿#region Apache License Version 2.0
 /*----------------------------------------------------------------
 
-Copyright 2018 Jeffrey Su & Suzhou Senparc Network Technology Co.,Ltd.
+Copyright 2019 Jeffrey Su & Suzhou Senparc Network Technology Co.,Ltd.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
 except in compliance with the License. You may obtain a copy of the License at
@@ -19,7 +19,7 @@ Detail: https://github.com/JeffreySu/WeiXinMPSDK/blob/master/license.md
 #endregion Apache License Version 2.0
 
 /*----------------------------------------------------------------
-    Copyright (C) 2018 Senparc
+    Copyright (C) 2019 Senparc
     
     文件名：StoreApi.cs
     文件功能描述：门店管理接口
@@ -47,8 +47,10 @@ Detail: https://github.com/JeffreySu/WeiXinMPSDK/blob/master/license.md
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Senparc.CO2NET.Extensions;
+using Senparc.NeuChar;
+using Senparc.Weixin.CommonAPIs;
 using Senparc.Weixin.Entities;
-using Senparc.Weixin.HttpUtility;
+using Senparc.CO2NET.HttpUtility;
 using Senparc.Weixin.MP.AdvancedAPIs.Poi;
 using Senparc.Weixin.MP.CommonAPIs;
 
@@ -82,8 +84,8 @@ namespace Senparc.Weixin.MP.AdvancedAPIs
     public static class PoiApi
     {
         #region 同步方法
-        
-     
+
+
         /// <summary>
         /// 上传图片
         /// </summary>
@@ -91,6 +93,7 @@ namespace Senparc.Weixin.MP.AdvancedAPIs
         /// <param name="file">文件路径</param>
         /// <param name="timeOut"></param>
         /// <returns></returns>
+        [ApiBind(NeuChar.PlatformType.WeChat_OfficialAccount, "PoiApi.UploadImage", true)]
         public static UploadImageResultJson UploadImage(string accessTokenOrAppId, string file, int timeOut = Config.TIME_OUT)
         {
             return ApiHandlerWapper.TryCommonApi(accessToken =>
@@ -111,6 +114,7 @@ namespace Senparc.Weixin.MP.AdvancedAPIs
         /// <param name="createStoreData"></param>
         /// <param name="timeOut"></param>
         /// <returns></returns>
+        [ApiBind(NeuChar.PlatformType.WeChat_OfficialAccount, "PoiApi.AddPoi", true)]
         public static WxJsonResult AddPoi(string accessTokenOrAppId, CreateStoreData createStoreData,
             int timeOut = Config.TIME_OUT)
         {
@@ -130,6 +134,7 @@ namespace Senparc.Weixin.MP.AdvancedAPIs
         /// <param name="poiId"></param>
         /// <param name="timeOut"></param>
         /// <returns></returns>
+        [ApiBind(NeuChar.PlatformType.WeChat_OfficialAccount, "PoiApi.GetPoi", true)]
         public static GetStoreResultJson GetPoi(string accessTokenOrAppId, string poiId, int timeOut = Config.TIME_OUT)
         {
             return ApiHandlerWapper.TryCommonApi(accessToken =>
@@ -154,6 +159,7 @@ namespace Senparc.Weixin.MP.AdvancedAPIs
         /// <param name="limit">返回数据条数，最大允许50，默认为20</param>
         /// <param name="timeOut"></param>
         /// <returns></returns>
+        [ApiBind(NeuChar.PlatformType.WeChat_OfficialAccount, "PoiApi.GetPoiList", true)]
         public static GetStoreListResultJson GetPoiList(string accessTokenOrAppId, int begin, int limit = 20, int timeOut = Config.TIME_OUT)
         {
             return ApiHandlerWapper.TryCommonApi(accessToken =>
@@ -178,6 +184,7 @@ namespace Senparc.Weixin.MP.AdvancedAPIs
         /// <param name="poiId"></param>
         /// <param name="timeOut"></param>
         /// <returns></returns>
+        [ApiBind(NeuChar.PlatformType.WeChat_OfficialAccount, "PoiApi.DeletePoi", true)]
         public static WxJsonResult DeletePoi(string accessTokenOrAppId, string poiId, int timeOut = Config.TIME_OUT)
         {
             return ApiHandlerWapper.TryCommonApi(accessToken =>
@@ -204,6 +211,7 @@ namespace Senparc.Weixin.MP.AdvancedAPIs
         /// photo_list 字段为全列表覆盖，若需要增加图片，需将之前图片同样放入list 中，在其后增加新增图片。如：已有A、B、C 三张图片，又要增加D、E 两张图，则需要调用该接口，photo_list 传入A、B、C、D、E 五张图片的链接。
         /// <param name="timeOut"></param>
         /// <returns></returns>
+        [ApiBind(NeuChar.PlatformType.WeChat_OfficialAccount, "PoiApi.UpdatePoi", true)]
         public static WxJsonResult UpdatePoi(string accessTokenOrAppId, UpdateStoreData updateStoreData, int timeOut = Config.TIME_OUT)
         {
             return ApiHandlerWapper.TryCommonApi(accessToken =>
@@ -220,6 +228,7 @@ namespace Senparc.Weixin.MP.AdvancedAPIs
         /// </summary>
         /// <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
         /// <returns></returns>
+        [ApiBind(NeuChar.PlatformType.WeChat_OfficialAccount, "PoiApi.GetCategory", true)]
         public static GetCategoryResult GetCategory(string accessTokenOrAppId)
         {
             return ApiHandlerWapper.TryCommonApi(accessToken =>
@@ -234,13 +243,14 @@ namespace Senparc.Weixin.MP.AdvancedAPIs
 
 #if !NET35 && !NET40
         #region 异步方法
-         /// <summary>
+        /// <summary>
         /// 【异步方法】上传图片
         /// </summary>
         /// <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
         /// <param name="file">文件路径</param>
         /// <param name="timeOut"></param>
         /// <returns></returns>
+        [ApiBind(NeuChar.PlatformType.WeChat_OfficialAccount, "PoiApi.UploadImageAsync", true)]
         public static async Task<UploadImageResultJson> UploadImageAsync(string accessTokenOrAppId, string file, int timeOut = Config.TIME_OUT)
         {
             return await ApiHandlerWapper.TryCommonApiAsync(async accessToken =>
@@ -261,6 +271,7 @@ namespace Senparc.Weixin.MP.AdvancedAPIs
         /// <param name="createStoreData"></param>
         /// <param name="timeOut"></param>
         /// <returns></returns>
+        [ApiBind(NeuChar.PlatformType.WeChat_OfficialAccount, "PoiApi.AddPoiAsync", true)]
         public static async Task<WxJsonResult> AddPoiAsync(string accessTokenOrAppId, CreateStoreData createStoreData,
             int timeOut = Config.TIME_OUT)
         {
@@ -280,6 +291,7 @@ namespace Senparc.Weixin.MP.AdvancedAPIs
         /// <param name="poiId"></param>
         /// <param name="timeOut"></param>
         /// <returns></returns>
+        [ApiBind(NeuChar.PlatformType.WeChat_OfficialAccount, "PoiApi.GetPoiAsync", true)]
         public static async Task<GetStoreResultJson> GetPoiAsync(string accessTokenOrAppId, string poiId, int timeOut = Config.TIME_OUT)
         {
             return await ApiHandlerWapper.TryCommonApiAsync(async accessToken =>
@@ -304,6 +316,7 @@ namespace Senparc.Weixin.MP.AdvancedAPIs
         /// <param name="limit">返回数据条数，最大允许50，默认为20</param>
         /// <param name="timeOut"></param>
         /// <returns></returns>
+        [ApiBind(NeuChar.PlatformType.WeChat_OfficialAccount, "PoiApi.GetPoiListAsync", true)]
         public static async Task<GetStoreListResultJson> GetPoiListAsync(string accessTokenOrAppId, int begin, int limit = 20, int timeOut = Config.TIME_OUT)
         {
             return await ApiHandlerWapper.TryCommonApiAsync(async accessToken =>
@@ -328,6 +341,7 @@ namespace Senparc.Weixin.MP.AdvancedAPIs
         /// <param name="poiId"></param>
         /// <param name="timeOut"></param>
         /// <returns></returns>
+        [ApiBind(NeuChar.PlatformType.WeChat_OfficialAccount, "PoiApi.DeletePoiAsync", true)]
         public static async Task<WxJsonResult> DeletePoiAsync(string accessTokenOrAppId, string poiId, int timeOut = Config.TIME_OUT)
         {
             return await ApiHandlerWapper.TryCommonApiAsync(async accessToken =>
@@ -354,6 +368,7 @@ namespace Senparc.Weixin.MP.AdvancedAPIs
         /// photo_list 字段为全列表覆盖，若需要增加图片，需将之前图片同样放入list 中，在其后增加新增图片。如：已有A、B、C 三张图片，又要增加D、E 两张图，则需要调用该接口，photo_list 传入A、B、C、D、E 五张图片的链接。
         /// <param name="timeOut"></param>
         /// <returns></returns>
+        [ApiBind(NeuChar.PlatformType.WeChat_OfficialAccount, "PoiApi.UpdatePoiAsync", true)]
         public static async Task<WxJsonResult> UpdatePoiAsync(string accessTokenOrAppId, UpdateStoreData updateStoreData, int timeOut = Config.TIME_OUT)
         {
             return await ApiHandlerWapper.TryCommonApiAsync(async accessToken =>
@@ -370,6 +385,7 @@ namespace Senparc.Weixin.MP.AdvancedAPIs
         /// </summary>
         /// <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
         /// <returns></returns>
+        [ApiBind(NeuChar.PlatformType.WeChat_OfficialAccount, "PoiApi.GetCategoryAsync", true)]
         public static async Task<GetCategoryResult> GetCategoryAsync(string accessTokenOrAppId)
         {
             return await ApiHandlerWapper.TryCommonApiAsync(async accessToken =>

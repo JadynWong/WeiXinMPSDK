@@ -1,7 +1,7 @@
 ﻿#region Apache License Version 2.0
 /*----------------------------------------------------------------
 
-Copyright 2018 Jeffrey Su & Suzhou Senparc Network Technology Co.,Ltd.
+Copyright 2019 Jeffrey Su & Suzhou Senparc Network Technology Co.,Ltd.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
 except in compliance with the License. You may obtain a copy of the License at
@@ -19,7 +19,7 @@ Detail: https://github.com/JeffreySu/WeiXinMPSDK/blob/master/license.md
 #endregion Apache License Version 2.0
 
 /*----------------------------------------------------------------
-    Copyright (C) 2018 Senparc
+    Copyright (C) 2019 Senparc
 
     文件名：Card_BaseInfoBase.cs
     文件功能描述：基本的卡券数据，所有卡券通用。作为 Card_BaseInfo和 的基类
@@ -42,6 +42,8 @@ Detail: https://github.com/JeffreySu/WeiXinMPSDK/blob/master/license.md
 ----------------------------------------------------------------*/
 
 
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Senparc.CO2NET.Helpers.Serializers;
 using System.Collections.Generic;
 
@@ -67,6 +69,7 @@ namespace Senparc.Weixin.MP.AdvancedAPIs.Card
         /// code 码展示类型
         /// 必填
         /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
         public Card_CodeType code_type { get; set; }
         /// <summary>
         /// 商户名字,字数上限为12 个汉字。（填写直接提供服务的商户名， 第三方商户名填写在source 字段）
@@ -173,6 +176,14 @@ namespace Senparc.Weixin.MP.AdvancedAPIs.Card
         /// </summary>
         public string custom_url_sub_title { get; set; }
         /// <summary>
+        /// 自定义使用入口跳转小程序的user_name，格式为小程序原始id+@app  小程序原始id可以在小程序的设置页面底部查看到
+        /// </summary>
+        public string custom_app_brand_user_name { get; set; }
+        /// <summary>
+        /// 自定义使用入口小程序页面地址
+        /// </summary>
+        public string custom_app_brand_pass { get; set; }
+        /// <summary>
         /// 营销场景的自定义入口名称
         /// 非必填
         /// </summary>
@@ -187,6 +198,14 @@ namespace Senparc.Weixin.MP.AdvancedAPIs.Card
         /// 非必填
         /// </summary>
         public string promotion_url_sub_title { get; set; }
+        /// <summary>
+        /// 小程序的user_name 格式为小程序原始id+@app  小程序原始id可以在小程序的设置页面底部查看到
+        /// </summary>
+        public string promotion_app_brand_user_name { get; set; }
+        /// <summary>
+        /// 自定义营销入口小程序页面地址
+        /// </summary>
+        public string promotion_app_brand_pass { get; set; }
         /// <summary>
         /// 积分余额变动消息类型
         /// </summary>
